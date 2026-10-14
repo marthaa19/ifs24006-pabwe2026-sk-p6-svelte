@@ -17,8 +17,9 @@ export function removeAccessToken() {
  * Pembungkus fetch ke REST API Delcom.
  * - body object biasa  -> otomatis JSON
  * - body FormData      -> dikirim apa adanya (untuk upload berkas)
- * - mengembalikan JSON { success, message, data }
- * - melempar Error(message) bila success === false atau jaringan gagal
+ * - mengembalikan JSON { status, message, data }
+ * - melempar Error(message) bila status !== "success" atau jaringan gagal
+ * - bila ada detail validasi (data.field), pesan field pertama ikut ditampilkan
  */
 export async function fetchApi(path, { method = "GET", body } = {}) {
   const headers = {};
@@ -43,8 +44,14 @@ export async function fetchApi(path, { method = "GET", body } = {}) {
     throw new Error("Tidak dapat terhubung ke server");
   }
 
-  if (!json.success) {
-    throw new Error(json.message || "Terjadi kesalahan");
+  if (json.status !== "success") {
+    let message = json.message || "Terjadi kesalahan";
+    // Respons gagal validasi: { status: "fail", data: { field: ["pesan"] } }
+    if (json.data && typeof json.data === "object") {
+      const details = Object.values(json.data).flat().filter(Boolean);
+      if (details.length) message = `${message}: ${details.join(", ")}`;
+    }
+    throw new Error(message);
   }
   return json;
 }
