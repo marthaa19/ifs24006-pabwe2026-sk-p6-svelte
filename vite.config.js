@@ -25,8 +25,11 @@ export default defineConfig(({ mode }) => {
       chunkSizeWarningLimit: 1500,
     },
     define: {
+      // Saat test, selalu pakai URL tetap agar hasil tes tidak bergantung pada isi .env
       DELCOM_BASEURL: JSON.stringify(
-        env.VITE_DELCOM_BASEURL || "http://localhost:8000/api/v1"
+        mode === "test"
+          ? "http://localhost:8000/api/v1"
+          : env.VITE_DELCOM_BASEURL || "http://localhost:8000/api/v1"
       ),
     },
     test: {
