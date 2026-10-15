@@ -21,7 +21,7 @@
         onclick={(e) => { goto(e, item.path); onnavigate?.(); }}
         class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium {active ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-100'}"
       >
-        <item.icon size={18} /> {item.label}
+        <item.icon size={18} /> <span>{item.label}</span>
       </a>
     {/each}
   </nav>

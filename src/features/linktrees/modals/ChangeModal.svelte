@@ -1,9 +1,10 @@
 <script>
   import { onMount } from "svelte";
   import Modal from "../components/Modal.svelte";
+  import TypeSelect from "../components/TypeSelect.svelte";
   import { useInput } from "../../../hooks/useInput.js";
   import { changeLinkTree, isSaving } from "../states/linkTreesStore.js";
-  import { TYPE_OPTIONS, inputClass, btnPrimary, btnSecondary } from "../constants.js";
+  import { inputClass, btnPrimary, btnSecondary } from "../constants.js";
 
   let { linkTree, onclose } = $props();
 
@@ -37,9 +38,7 @@
     </div>
     <div>
       <label for="chg-type" class="mb-1 block text-sm">Tipe</label>
-      <select id="chg-type" class={inputClass} bind:value={$type}>
-        {#each TYPE_OPTIONS as o (o.value)}<option value={o.value}>{o.label}</option>{/each}
-      </select>
+      <TypeSelect id="chg-type" bind:value={$type} />
     </div>
     <div>
       <label for="chg-desc" class="mb-1 block text-sm">Deskripsi</label>

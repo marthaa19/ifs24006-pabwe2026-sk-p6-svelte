@@ -93,7 +93,7 @@
         type="search"
         aria-label="Cari link tree"
         placeholder="Cari judul, deskripsi, atau penulis..."
-        class="{inputClass} pl-9"
+        class={`${inputClass} pl-9`}
         bind:value={keyword}
       />
     </div>
@@ -132,7 +132,7 @@
                   {lt.title}
                 </a>
               </h2>
-              <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium {meta.class}">{meta.label}</span>
+              <span class={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${meta.class}`}>{meta.label}</span>
             </div>
             <p class="line-clamp-2 text-sm text-slate-600">{lt.description || "Tanpa deskripsi"}</p>
             <div class="mt-auto flex items-center justify-between gap-2 pt-2 text-xs text-slate-500">
@@ -142,7 +142,7 @@
                 {/if}
                 <span class="truncate">{lt.author?.name ?? "-"}</span>
               </span>
-              <span class="shrink-0">{lt.total_links ?? 0} tautan · {formatDate(lt.created_at)}</span>
+              <span class="shrink-0">{`${lt.total_links ?? 0} tautan · ${formatDate(lt.created_at)}`}</span>
             </div>
             {#if isOwner(lt)}
               <button

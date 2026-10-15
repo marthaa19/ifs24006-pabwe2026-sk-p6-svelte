@@ -23,16 +23,19 @@ export async function loadLinkTrees({ isMe = false } = {}) {
   }
 }
 
-export async function loadLinkTree(id) {
-  linkTree.set(null);
-  isLinkTreeLoading.set(true);
+// silent = true: muat ulang diam-diam (setelah mutasi) tanpa mengosongkan halaman
+export async function loadLinkTree(id, { silent = false } = {}) {
+  if (!silent) {
+    linkTree.set(null);
+    isLinkTreeLoading.set(true);
+  }
   try {
     const res = await api.getLinkTreeById(id);
     linkTree.set(res.data.link_tree);
   } catch (error) {
     await showErrorDialog(error.message);
   } finally {
-    isLinkTreeLoading.set(false);
+    if (!silent) isLinkTreeLoading.set(false);
   }
 }
 
@@ -60,13 +63,13 @@ export async function addLinkTree(data) {
 
 export async function changeLinkTree(id, data) {
   const res = await mutate(() => api.putLinkTree(id, data), "Berhasil mengubah data");
-  if (res) await loadLinkTree(id);
+  if (res) await loadLinkTree(id, { silent: true });
   return Boolean(res);
 }
 
 export async function changeCover(id, file) {
   const res = await mutate(() => api.postLinkTreeCover(id, file), "Berhasil mengubah cover");
-  if (res) await loadLinkTree(id);
+  if (res) await loadLinkTree(id, { silent: true });
   return Boolean(res);
 }
 
@@ -82,18 +85,18 @@ export async function removeAllLinkTrees() {
 
 export async function addItem(linkTreeId, data) {
   const res = await mutate(() => api.postItem(linkTreeId, data), "Berhasil menambahkan data");
-  if (res) await loadLinkTree(linkTreeId);
+  if (res) await loadLinkTree(linkTreeId, { silent: true });
   return Boolean(res);
 }
 
 export async function changeItem(linkTreeId, id, data) {
   const res = await mutate(() => api.putItem(linkTreeId, id, data), "Berhasil mengubah data");
-  if (res) await loadLinkTree(linkTreeId);
+  if (res) await loadLinkTree(linkTreeId, { silent: true });
   return Boolean(res);
 }
 
 export async function removeItem(linkTreeId, id) {
   const res = await mutate(() => api.deleteItem(linkTreeId, id), "Berhasil menghapus data");
-  if (res) await loadLinkTree(linkTreeId);
+  if (res) await loadLinkTree(linkTreeId, { silent: true });
   return Boolean(res);
 }

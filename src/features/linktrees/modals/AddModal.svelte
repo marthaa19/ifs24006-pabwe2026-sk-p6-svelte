@@ -1,8 +1,9 @@
 <script>
   import Modal from "../components/Modal.svelte";
+  import TypeSelect from "../components/TypeSelect.svelte";
   import { useInput } from "../../../hooks/useInput.js";
   import { addLinkTree, isSaving } from "../states/linkTreesStore.js";
-  import { TYPE_OPTIONS, inputClass, btnPrimary, btnSecondary } from "../constants.js";
+  import { inputClass, btnPrimary, btnSecondary } from "../constants.js";
 
   let { onclose, onsaved } = $props();
 
@@ -28,9 +29,7 @@
     </div>
     <div>
       <label for="add-type" class="mb-1 block text-sm">Tipe</label>
-      <select id="add-type" class={inputClass} bind:value={$type}>
-        {#each TYPE_OPTIONS as o (o.value)}<option value={o.value}>{o.label}</option>{/each}
-      </select>
+      <TypeSelect id="add-type" bind:value={$type} />
     </div>
     <div>
       <label for="add-desc" class="mb-1 block text-sm">Deskripsi</label>
