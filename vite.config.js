@@ -4,6 +4,31 @@ import { svelteTesting } from "@testing-library/svelte/vite";
 import tailwindcss from "@tailwindcss/vite";
 import process from "process";
 
+// Menyisipkan CSS hasil build langsung ke index.html agar tidak ada permintaan CSS yang memblokir render
+function inlineCss() {
+  return {
+    name: "inline-css",
+    enforce: "post",
+    apply: "build",
+    transformIndexHtml(html, ctx) {
+      if (!ctx.bundle) return html;
+      let result = html;
+      for (const [fileName, asset] of Object.entries(ctx.bundle)) {
+        if (asset.type === "asset" && fileName.endsWith(".css")) {
+          const link = new RegExp(
+            `<link[^>]*href="[^"]*${fileName.split("/").pop()}"[^>]*>`
+          );
+          if (link.test(result)) {
+            result = result.replace(link, () => `<style>${asset.source}</style>`);
+            delete ctx.bundle[fileName];
+          }
+        }
+      }
+      return result;
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
@@ -13,6 +38,7 @@ export default defineConfig(({ mode }) => {
         prebundleSvelteLibraries: false,
       }),
       tailwindcss(),
+      inlineCss(),
       svelteTesting(),
     ],
     server: {
