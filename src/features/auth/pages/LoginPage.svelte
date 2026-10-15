@@ -16,16 +16,16 @@
 <h2 class="text-xl font-bold mb-4">Masuk</h2>
 <form onsubmit={handleSubmit} class="space-y-4">
   <div>
-    <label for="email" class="block text-sm font-medium mb-1">Email</label>
-    <input id="email" type="email" required bind:value={$email}
+    <label for="login-email-input" class="block text-sm font-medium mb-1">Email</label>
+    <input id="login-email-input" type="email" required bind:value={$email}
       class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
   </div>
   <div>
-    <label for="password" class="block text-sm font-medium mb-1">Kata Sandi</label>
-    <input id="password" type="password" required bind:value={$password}
+    <label for="login-password-input" class="block text-sm font-medium mb-1">Kata Sandi</label>
+    <input id="login-password-input" type="password" required bind:value={$password}
       class="w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
   </div>
-  <button type="submit" disabled={$isAuthLoading}
+  <button id="login-submit-button" type="submit" disabled={$isAuthLoading}
     class="w-full rounded-lg bg-indigo-600 text-white font-semibold py-2 hover:bg-indigo-700 disabled:opacity-60">
     {$isAuthLoading ? "Memproses..." : "Masuk"}
   </button>
