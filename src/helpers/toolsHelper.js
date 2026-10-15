@@ -32,3 +32,8 @@ export function formatDate(value) {
     year: "numeric",
   });
 }
+
+// Delcom mengirim URL berakhiran "/" bila gambar belum diunggah
+export function hasImage(url) {
+  return Boolean(url) && !String(url).endsWith("/");
+}
