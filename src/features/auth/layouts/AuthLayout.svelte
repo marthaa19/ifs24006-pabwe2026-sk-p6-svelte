@@ -4,7 +4,7 @@
   let { children } = $props();
 </script>
 
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-slate-100 p-4">
+<main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-slate-100 p-4">
   <div class="w-full max-w-md">
     <div class="text-center mb-6">
       <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600 text-white mb-3">
@@ -19,4 +19,4 @@
       {@render children()}
     </div>
   </div>
-</div>
+</main>

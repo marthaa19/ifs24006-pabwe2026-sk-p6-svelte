@@ -10,10 +10,10 @@ import {
 } from "./toolsHelper.js";
 
 describe("dialog", () => {
-  it("menampilkan dialog sukses, error, dan peringatan", () => {
-    showSuccessDialog("ok");
-    showErrorDialog("buruk");
-    showWarningDialog("awas");
+  it("menampilkan dialog sukses, error, dan peringatan", async () => {
+    await showSuccessDialog("ok");
+    await showErrorDialog("buruk");
+    await showWarningDialog("awas");
     expect(Swal.fire).toHaveBeenNthCalledWith(1, { icon: "success", title: "Berhasil", text: "ok" });
     expect(Swal.fire).toHaveBeenNthCalledWith(2, { icon: "error", title: "Gagal", text: "buruk" });
     expect(Swal.fire).toHaveBeenNthCalledWith(3, { icon: "warning", title: "Perhatian", text: "awas" });

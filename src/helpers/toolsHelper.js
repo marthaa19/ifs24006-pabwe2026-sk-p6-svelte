@@ -1,19 +1,23 @@
-import Swal from "sweetalert2";
+// SweetAlert2 dimuat hanya saat dialog pertama kali ditampilkan (mengurangi JavaScript awal)
+async function fire(options) {
+  const { default: Swal } = await import("sweetalert2");
+  return Swal.fire(options);
+}
 
 export function showSuccessDialog(message) {
-  return Swal.fire({ icon: "success", title: "Berhasil", text: message });
+  return fire({ icon: "success", title: "Berhasil", text: message });
 }
 
 export function showErrorDialog(message) {
-  return Swal.fire({ icon: "error", title: "Gagal", text: message });
+  return fire({ icon: "error", title: "Gagal", text: message });
 }
 
 export function showWarningDialog(message) {
-  return Swal.fire({ icon: "warning", title: "Perhatian", text: message });
+  return fire({ icon: "warning", title: "Perhatian", text: message });
 }
 
 export async function showConfirmDialog(title, text = "") {
-  const result = await Swal.fire({
+  const result = await fire({
     icon: "question",
     title,
     text,

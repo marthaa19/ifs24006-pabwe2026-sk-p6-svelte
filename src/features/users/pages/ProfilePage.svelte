@@ -71,7 +71,7 @@
     {#if $profile?.photo}
       <img src={$profile.photo} alt="Foto profil" class="w-20 h-20 rounded-full object-cover" />
     {/if}
-    <input type="file" accept="image/*" class={inputClass}
+    <input type="file" aria-label="Pilih berkas foto profil" accept="image/*" class={inputClass}
       onchange={(e) => (photoFile = e.target.files[0] ?? null)} />
     <button class={btnClass}>Unggah</button>
   </form>
